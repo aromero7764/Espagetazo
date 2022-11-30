@@ -1,28 +1,21 @@
 # REST API Users CRUD
 
-# Endpoints
+## Endpoints
 
+GET ALL Users
 `GET api/v1/users/`
 
-### Response
+Get user by Id
+`GET api/v1/users/{id}`
 
-[
-  {
-    "id": 1,
-    "first_name": "Alberto",
-    "last_name": "Romero",
-    "email": "prueba@gmail.com",
-    "password": "123456",
-    "birthday": "2020/10/22"
-  },
-  {
-    "id": 2,
-    "first_name": "Alejandro",
-    "last_name": "Rondon",
-    "email": "prueba2@gmail.com",
-    "password": "123456",
-    "birthday": "2020/10/22"
-  },
-]
+Create a new user
+`POST api/v1/users/{body}`
 
-## Create a new Thing
+Update User
+`PATCH api/v1/users/{id},{body}`
+
+Delete User by id
+`DELETE api/v1/users/{id}`
+
+
+
