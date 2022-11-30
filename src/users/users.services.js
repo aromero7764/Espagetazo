@@ -1,22 +1,96 @@
+const userControllers = require('./users.controllers')
 
-const getAllUsers = () => {
+
+const getAllUsers = (req, res) => {
+  userControllers.findAllUsers()
+      .then((data)=> {
+        res.status(200).json(data)
+      })
+      .catch((err) => {
+        res.status(400).json({message: err.message
+        })
+      })
 
 }
 
-const getUserById = () => {
+const getUserById = (req, res) => {
+  const id = req.params.id
+  console.log(id)
+    userControllers.findUserById(id)
+    .then((data)=> {
+      if(data) {
+        res.status(200).json(data)
+      } else {
+        res.status(400).json({message: 'Invalid user Id'})
+      }
+
+    })
+    .catch((err)=> {
+      res.status(200).json({message: err.message})
+    })
+}
+
+
+const postUser = (req, res) => {
+  const {first_name, last_name, email,  password, birthday } = req.body
+  userControllers.createUser({first_name, 
+                              last_name, 
+                              email,  
+                              password, 
+                              birthday 
+                            })
+    .then((data)=> { res.status(201).json(data) })
+    .catch((err) => {
+      res.status(400).json({message: err.message})
+    })
+}
+
+const patchUser = (req, res) => {
+    const id = req.params.id
+    console.log(id)
+    const {first_name, last_name, email,  password, birthday } = req.body
+  
+    userControllers.updateUser(id, 
+                              { first_name, 
+                                last_name, 
+                                email,  
+                                password, 
+                                birthday 
+                              })
+        .then((data)=> {
+          if(data) {
+            res.status(200).json({message: 'User modify Succesfully'})
+          } else {
+            res.status(404).json({message: 'Invalid User ID'})
+          }
+        })
+        .catch((err)=> {
+          res.status(400).json({message: err.message})
+        })
+}
+
+const deleteUser = (req, res) => {
+  const id = req.params.id
+  userControllers.deleteUser(id)
+      .then((data)=> {
+        if(data) {
+          res.status(200).json({message: 'User succesfully Deleted'})
+        } else {
+          res.status(404).json({message: 'Invalid User ID'})
+        }
+      })
+      .catch((err)=> {
+        res.status(200).json({message: err.message})
+      })
     
 }
 
-const postUser = () => {
-    
-}
+module.exports = {
+  getAllUsers,
+  getUserById,
+  postUser,
+  patchUser,
+  deleteUser
 
-const patchUser = () => {
-    
 }
-
-const deleteUser = () => {
-    
-}
-
 
